@@ -18,25 +18,28 @@
             {
                 text-align:center;
                 width:100%;
-                font-size:300%;
+                font-size:1000%;
             }  
         </style>
     </head>
     <body>
-        <br><br>
+        <br>
         <h1 id ="counter"></h1>
     </body>
     <script>
 
 
-        let data = window.location.href.split("?");
-        date = data[1].split("-")[0];
-        time = data[1].split("-")[1];
+        const data = window.location.href.split("?");
+        let date = data[1].split(".")[0];
+        let time = data[1].split(".")[1];
+        let gmt = data[1].split(".")[2];
         
-        const reference_date = new Date(date + " " + time); //leer del url
+        const reference_date = new Date(date + " " + time + " " + gmt);
+
+        const counter = document.getElementById("counter");
         
 
-        function updateTime(reference)
+        function updateCounter(reference)
         {
             let d = new Date();
             let actual_date = new Date(d.getFullYear()+"/"+(d.getMonth()+1)+"/"+d.getDate()+ " " + d.getHours() +":"+d.getMinutes()+":"+d.getSeconds()); //fecha actual
@@ -48,39 +51,47 @@
             let hours = Math.floor(mins / 60);
             let days = Math.floor(hours / 24);
 
-            secs -= Math.floor(mins) *60;
-            mins -= Math.floor(hours) *60;
-            hours -= Math.floor(days) *24;
+            secs -= Math.floor(mins) * 60;
+            mins -= Math.floor(hours) * 60;
+            hours -= Math.floor(days) * 24;
 
             let text = "";
+
             if (days != 1){
                 text += days + " days<br>";
             }
-            else{
+            else
+            {
                 text += days + " day<br>";
             }
+
             if (hours != 1){
                 text += hours + " hours<br>";
             }
-            else{
+            else
+            {
                 text += hours + " hour<br>";
             }
+
             if (mins != 1){
                 text += mins + " mins<br>";
             }
-            else{
+            else
+            {
                 text += mins + " min<br>";
             }
+
             if (secs != 1){
                 text += secs + " secs<br>";
-            }else{
+            }else
+            {
                 text += secs + " sec<br>";
             }
 
-            document.getElementById("counter").innerHTML = text;
+            counter.innerHTML = text;
 
         }
 
-        window.setInterval(()=>updateTime(reference_date), 250);
+        window.setInterval(()=>updateCounter(reference_date), 250);
     </script>
 </html>
